@@ -4,10 +4,11 @@ import { Link } from "@inertiajs/react";
 export default function GuestLayout({ children }) {
     return (
         <div className="flex flex-row">
-            <div className="h-screen w-1/2">
+            <div className="h-screen w-1/2 max-lg:w-full">
                 <div className="container">
-                    <div className="flex px-36 h-screen justify-center items-center">
-                        <div className="flex flex-col justify-center gap-5 w-full">
+                    <div className="flex px-36 max-lg:px-4 h-screen justify-center items-center">
+                        <div className="flex flex-col justify-center gap-3 w-full">
+                            <div className=" h-44 hidden max-md:block rounded-xl w-full bg-[url('assets/image/login_art.png')] bg-cover bg-no-repeat"></div>
                             <div className="flex justify-center">
                                 <Link href="/" className="">
                                     <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
@@ -26,7 +27,7 @@ export default function GuestLayout({ children }) {
                     </div>
                 </div>
             </div>
-            <div className="h-screen rounded-l-3xl w-1/2 bg-[url('assets/image/login_art.png')] bg-cover bg-no-repeat"></div>
+            <div className="h-screen max-lg:hidden rounded-l-3xl w-1/2 bg-[url('assets/image/login_art.png')] bg-cover bg-no-repeat"></div>
             {/* <div>
                 <Link href="/">
                     <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />

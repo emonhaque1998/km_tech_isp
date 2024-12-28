@@ -100,7 +100,12 @@ export default function Login({ status, canResetPassword }) {
             </form>
 
             <div className="text-center text-[#313957]">
-                <p>Don't you have an account? Sign up</p>
+                <p>
+                    Don't you have an account?{" "}
+                    <Link className="underline" href={route("register")}>
+                        Sign up
+                    </Link>
+                </p>
             </div>
         </GuestLayout>
     );

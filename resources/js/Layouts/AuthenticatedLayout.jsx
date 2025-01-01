@@ -6,6 +6,7 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -14,11 +15,15 @@ export default function AuthenticatedLayout({ header, children }) {
         useState(false);
 
     return (
-        <div>
-            <SideBar>
+        <SidebarProvider>
+            <SideBar />
+            <div className="flex flex-col w-full">
                 <Header />
-                {children}
-            </SideBar>
-        </div>
+                <main>
+                    <SidebarTrigger />
+                    {children}
+                </main>
+            </div>
+        </SidebarProvider>
     );
 }

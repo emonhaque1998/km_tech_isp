@@ -4,6 +4,47 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
 import { Link } from "@inertiajs/react";
+import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarHeader,
+} from "@/components/ui/sidebar";
+
+// Menu items.
+const items = [
+    {
+        title: "Dashboard",
+        url: route("dashboard"),
+        icon: Home,
+    },
+    {
+        title: "Inbox",
+        url: "#",
+        icon: Inbox,
+    },
+    {
+        title: "Calendar",
+        url: "#",
+        icon: Calendar,
+    },
+    {
+        title: "Search",
+        url: "#",
+        icon: Search,
+    },
+    {
+        title: "Settings",
+        url: "#",
+        icon: Settings,
+    },
+];
 
 export default function SideBar({ children }) {
     const [navDropdown, setNavDropdown] = useState(false);
@@ -16,32 +57,39 @@ export default function SideBar({ children }) {
     return (
         <div className="flex flex-row">
             <div className="w-2/12 h-screen shadow-md sticky top-0 flex flex-col gap-3">
-                <div className="w-full flex justify-center border-b">
-                    <ApplicationLogo
-                        className="fill-current text-gray-500"
-                        width="w-28"
-                    />
-                </div>
                 <div>
-                    <ul className="flex flex-col px-3">
-                        <li className="flex flex-row items-center justify-between">
-                            <div className="flex flex-row items-center gap-2 justify-start">
-                                <AiOutlineDashboard className="text-xl" />
-                                <Link
-                                    href=""
-                                    onClick={navDropdownHandler}
-                                    className="text-md"
-                                >
-                                    Dashboard
-                                </Link>
+                    <Sidebar>
+                        <SidebarHeader>
+                            <div className="flex justify-center">
+                                <ApplicationLogo width="w-24" />
                             </div>
-                            {navDropdown ? (
-                                <IoIosArrowDown className="font-thin" />
-                            ) : (
-                                <IoIosArrowForward className="font-thin" />
-                            )}
-                        </li>
-                    </ul>
+                        </SidebarHeader>
+                        <SidebarContent>
+                            <SidebarGroup>
+                                <SidebarGroupLabel>
+                                    Application
+                                </SidebarGroupLabel>
+                                <SidebarGroupContent>
+                                    <SidebarMenu>
+                                        {items.map((item) => (
+                                            <SidebarMenuItem key={item.title}>
+                                                <SidebarMenuButton asChild>
+                                                    <Link href={item.url}>
+                                                        <item.icon />
+                                                        <span>
+                                                            {item.title}
+                                                        </span>
+                                                    </Link>
+                                                </SidebarMenuButton>
+                                            </SidebarMenuItem>
+                                        ))}
+                                    </SidebarMenu>
+                                </SidebarGroupContent>
+                            </SidebarGroup>
+                            <SidebarGroup />
+                        </SidebarContent>
+                        {/* <SidebarFooter /> */}
+                    </Sidebar>
                 </div>
             </div>
             <div className="w-full">{children}</div>

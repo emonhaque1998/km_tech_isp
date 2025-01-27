@@ -4,8 +4,9 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\HyperlinkController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\HyperlinkController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -23,6 +24,7 @@ Route::get('/dashboard', function () {
 Route::middleware("auth", "verified")->group(function () {
     Route::resource("/hyperlink", HyperlinkController::class)->only(["index"]);
     Route::resource("/users", UserController::class)->only(["index", "show"]);
+    Route::resource("/categories", CategoryController::class)->only(["index"]);
 });
 
 Route::middleware('auth')->group(function () {

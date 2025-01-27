@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { Payment, columns } from "./columns";
 import { DataTable } from "./data-table";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import { Link, usePage } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { Input } from "@/components/ui/input";
 

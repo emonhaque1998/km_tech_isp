@@ -46,7 +46,7 @@ const items = [
     },
     {
         title: "Categories",
-        url: route("hyperlink.index"),
+        url: route("categories.index"),
         icon: ChartColumnStacked,
     },
 ];

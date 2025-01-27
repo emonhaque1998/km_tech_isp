@@ -22,14 +22,14 @@ export default function Categories({ categories }: PageProps<{ categories: Categ
                     <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
                         <div className="flex flex-row justify-between">
                             <div className="text-gray-900 py-3 w-1/3">
-                                Users
+                                Categories
                             </div>
                             <div className="text-gray-900 py-3 flex flex-row gap-2 w-2/3 items-center justify-end">
                                 <div>
                                     <Input />
                                 </div>
                                 <Link
-                                    href=""
+                                    href={route("add-category.index")}
                                     className="bg-[#e67e22] text-white py-2 max-md:py-2 max-md:px-2 max-md:text-sm rounded-lg hover:bg-[#d35400] px-3"
                                 >
                                     Add Category

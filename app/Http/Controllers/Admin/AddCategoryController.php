@@ -6,17 +6,16 @@ use Inertia\Inertia;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
-class CategoryController extends Controller
+class AddCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render("Hyperlink/Category/Categories", [
-            "categories" => Category::all()
-        ]);
+        return Inertia::render("Hyperlink/Category/AddCategory");
     }
 
     /**
@@ -32,7 +31,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            "slug" => ["required", "unique:categories,slug"],
+        ]);
+
+        Category::create($request->all());
+
+        return Redirect::route('add-category.index');
     }
 
     /**

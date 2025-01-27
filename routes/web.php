@@ -22,7 +22,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware("auth", "verified")->group(function () {
     Route::resource("/hyperlink", HyperlinkController::class)->only(["index"]);
-    Route::resource("/users", UserController::class)->only(["index"]);
+    Route::resource("/users", UserController::class)->only(["index", "show"]);
 });
 
 Route::middleware('auth')->group(function () {

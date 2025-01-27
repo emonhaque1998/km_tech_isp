@@ -12,6 +12,7 @@ import {
     Settings,
     Unlink,
     UsersRound,
+    ChartColumnStacked
 } from "lucide-react";
 import {
     Sidebar,
@@ -42,6 +43,11 @@ const items = [
         title: "Hyperlinks",
         url: route("hyperlink.index"),
         icon: Unlink,
+    },
+    {
+        title: "Categories",
+        url: route("hyperlink.index"),
+        icon: ChartColumnStacked,
     },
 ];
 

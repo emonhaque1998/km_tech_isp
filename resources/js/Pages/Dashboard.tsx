@@ -1,6 +1,18 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
-export default function Dashboard() {
+import { PageProps } from "@/types";
+import { Category } from "./Hyperlink/Category/columns";
+import { useState } from "react";
+
+export default function Dashboard({
+    categories,
+}: PageProps<{ categories: Category[] }>) {
+    // const [filter, setFilter] = useState("");
+
+    // const filteredCategories = categories.filter((category) =>
+    //     category.name.toLowerCase().includes(filter.toLowerCase())
+    // );
+
     return (
         <AuthenticatedLayout
             header={
@@ -15,31 +27,23 @@ export default function Dashboard() {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <div className="flex flex-row justify-between">
-                               <Link href="" className="bg-[#e67e22] hover:bg-[#d35400] cursor-pointer w-1/5 py-10 px-5">
-                                    <div className="text-white  text-center">
-                                        <h2 className="text-3xl">10</h2>
-                                        <p className="text-md">Hyperlinks</p>
-                                    </div>
-                               </Link>
-                               <Link href="" className="bg-[#e67e22] hover:bg-[#d35400] cursor-pointer w-1/5 py-10 px-5">
-                                    <div className="text-white  text-center">
-                                        <h2 className="text-3xl">10</h2>
-                                        <p className="text-md">Hyperlinks</p>
-                                    </div>
-                               </Link>
-                               <Link href="" className="bg-[#e67e22] hover:bg-[#d35400] cursor-pointer w-1/5 py-10 px-5">
-                                    <div className="text-white  text-center">
-                                        <h2 className="text-3xl">10</h2>
-                                        <p className="text-md">Hyperlinks</p>
-                                    </div>
-                               </Link>
-                               <Link href="" className="bg-[#e67e22] hover:bg-[#d35400] cursor-pointer w-1/5 py-10 px-5">
-                                    <div className="text-white  text-center">
-                                        <h2 className="text-3xl">10</h2>
-                                        <p className="text-md">Hyperlinks</p>
-                                    </div>
-                               </Link>
+                            <div className="grid grid-cols-4 gap-5">
+                                {categories.map((category) => {
+                                    return (
+                                        <Link
+                                            key={category.id}
+                                            href=""
+                                            className="bg-[#e67e22] hover:bg-[#d35400] cursor-pointer py-10 px-5 rounded-lg"
+                                        >
+                                            <div className="text-white  text-center">
+                                                <h2 className="text-3xl">10</h2>
+                                                <p className="text-md">
+                                                    {category.name}
+                                                </p>
+                                            </div>
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>

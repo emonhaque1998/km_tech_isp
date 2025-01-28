@@ -6,7 +6,24 @@ import { useState } from "react";
 
 export default function Dashboard({
     categories,
-}: PageProps<{ categories: Category[] }>) {
+}: PageProps<{
+    categories: [
+        {
+            id: number;
+            name: string;
+            slug: string;
+            hyperlink: [
+                {
+                    id: number;
+                    url: string;
+                    slug: string;
+                    category_count: number;
+                    category: { id: number; name: string };
+                }
+            ];
+        }
+    ];
+}>) {
     // const [filter, setFilter] = useState("");
 
     // const filteredCategories = categories.filter((category) =>
@@ -36,7 +53,9 @@ export default function Dashboard({
                                             className="bg-[#e67e22] hover:bg-[#d35400] cursor-pointer py-10 px-5 rounded-lg"
                                         >
                                             <div className="text-white  text-center">
-                                                <h2 className="text-3xl">10</h2>
+                                                <h2 className="text-3xl">
+                                                    {category.hyperlink.length}
+                                                </h2>
                                                 <p className="text-md">
                                                     {category.name}
                                                 </p>

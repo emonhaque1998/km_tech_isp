@@ -78,6 +78,10 @@ export default function GiveHyperlink({
                                             placeholder="Router"
                                             required
                                         />
+                                        <InputError
+                                            message={errors.user_id}
+                                            className=""
+                                        />
                                     </div>
                                     <div>
                                         <label
@@ -113,6 +117,9 @@ export default function GiveHyperlink({
                                             onChange={onChangeHandler}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
+                                            <option value="">
+                                                Select Category
+                                            </option>
                                             {categories.map((category) => {
                                                 return (
                                                     <option
@@ -124,6 +131,10 @@ export default function GiveHyperlink({
                                                 );
                                             })}
                                         </select>
+                                        <InputError
+                                            message={errors.category_id}
+                                            className=""
+                                        />
                                     </div>
                                 </div>
                                 <div className="flex gap-3 items-center flex-row">

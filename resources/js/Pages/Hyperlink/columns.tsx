@@ -11,9 +11,26 @@ import { ToastContainer, toast } from "react-toastify";
 export type Hyperlink = {
     id: number;
     url: string;
+    user: { id: number; name: string; email: string };
+    category: { id: number; name: string; slug: string };
 };
 
 export const columns: ColumnDef<Hyperlink>[] = [
+    {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => <span>{row.original.user.name}</span>,
+    },
+    {
+        accessorKey: "email",
+        header: "Email",
+        cell: ({ row }) => <span>{row.original.user.email}</span>,
+    },
+    {
+        accessorKey: "category",
+        header: "Category",
+        cell: ({ row }) => <span>{row.original.category.name}</span>,
+    },
     {
         accessorKey: "url",
         header: "Urls",

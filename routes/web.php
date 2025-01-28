@@ -2,6 +2,7 @@
 
 use Inertia\Inertia;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
@@ -21,8 +22,24 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    $user = Auth::user();
+    $hyperlinks = $user->hyperlink;
+    $categories = Category::whereHas('hyperlink', function ($query) use ($user) {
+        $query->where('user_id', $user->id);
+    })->with(['hyperlink' => function ($query) use ($user) {
+        $query->where('user_id', $user->id);
+    }])->get();
+
+    if ($hyperlinks) {
+        $hyperlinks = $hyperlinks->load(['category']);
+        $categoryCounts = $hyperlinks->groupBy('category_id')->map->count();
+        $hyperlinks->each(function ($hyperlink) use ($categoryCounts) {
+            $hyperlink->category_count = $categoryCounts[$hyperlink->category_id] ?? 0;
+        });
+    }
+
     return Inertia::render('Dashboard', [
-        "categories" => Category::all(),
+        'categories' => $categories,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

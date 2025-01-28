@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function hyperlink()
     {
-        return $this->belongsTo(Hyperlink::class);
+        return $this->hasMany(Hyperlink::class);
     }
 }

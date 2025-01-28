@@ -11,6 +11,6 @@ class Category extends Model
 
     public function hyperlink()
     {
-        return $this->hasOne(Hyperlink::class);
+        return $this->hasMany(Hyperlink::class);
     }
 }

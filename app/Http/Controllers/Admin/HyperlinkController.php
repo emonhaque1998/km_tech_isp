@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Hyperlink;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\User;
 
 class HyperlinkController extends Controller
 {
@@ -14,8 +16,10 @@ class HyperlinkController extends Controller
      */
     public function index()
     {
+        $hyperlinks = Hyperlink::with(['user', "category"])->get();
+        
         return Inertia::render("Hyperlink/Hyperlink", [
-            "hyperlinks" => Hyperlink::all(),
+            "hyperlinks" => $hyperlinks,
         ]);
     }
 
@@ -32,7 +36,15 @@ class HyperlinkController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());   
+        $request->validate([
+            "user_id" => "required",
+            "url" => ["required", "url"],
+            "category_id" => "required",
+        ]);
+
+        Hyperlink::create($request->all());
+
+        return Redirect::route("hyperlink.index");
     }
 
     /**

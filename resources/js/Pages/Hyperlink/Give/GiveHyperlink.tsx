@@ -6,8 +6,12 @@ import { FormEventHandler } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { PageProps } from "@/types";
 import { columns, Payment } from "@/Pages/Users/columns";
+import { Category } from "./../Category/columns";
 
-export default function GiveHyperlink({ user }: PageProps<{ user: Payment }>) {
+export default function GiveHyperlink({
+    user,
+    categories,
+}: PageProps<{ user: Payment; categories: Category[] }>) {
     const {
         data,
         setData,
@@ -18,11 +22,22 @@ export default function GiveHyperlink({ user }: PageProps<{ user: Payment }>) {
         recentlySuccessful,
     } = useForm({
         url: "",
+        user_id: user.id,
+        category_id: "",
     });
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setData("url", e.target.value);
+    };
+
+    const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setData("category_id", e.target.value);
+    };
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("add-hyperlink.store"), {
+        post(route("hyperlink.store"), {
             onFinish: () => reset("url", "url"),
             onSuccess: () =>
                 toast.success("Hyperlink added this user successfully"),
@@ -75,6 +90,7 @@ export default function GiveHyperlink({ user }: PageProps<{ user: Payment }>) {
                                             type="text"
                                             id="url"
                                             name="url"
+                                            onChange={handleNameChange}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="URL"
                                             required
@@ -87,23 +103,26 @@ export default function GiveHyperlink({ user }: PageProps<{ user: Payment }>) {
                                     <div>
                                         <label
                                             htmlFor="countries"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                         >
-                                            Select an option
+                                            Select a Category
                                         </label>
                                         <select
                                             id="countries"
+                                            value={data.category_id}
+                                            onChange={onChangeHandler}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option selected>
-                                                Choose a category
-                                            </option>
-                                            <option value="US">
-                                                United States
-                                            </option>
-                                            <option value="CA">Canada</option>
-                                            <option value="FR">France</option>
-                                            <option value="DE">Germany</option>
+                                            {categories.map((category) => {
+                                                return (
+                                                    <option
+                                                        value={category.id}
+                                                        key={category.id}
+                                                    >
+                                                        {category.name}
+                                                    </option>
+                                                );
+                                            })}
                                         </select>
                                     </div>
                                 </div>

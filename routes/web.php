@@ -27,7 +27,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware("auth", "verified")->group(function () {
-    Route::resource("/hyperlink", HyperlinkController::class)->only(["index"]);
+    Route::resource("/hyperlink", HyperlinkController::class)->only(["index", "store"]);
     Route::resource("/users", UserController::class)->only(["index", "show"]);
     Route::resource("/categories", CategoryController::class)->only(["index"]);
     Route::resource("/add-category", AddCategoryController::class)->only(["index", "store", "destroy"]);

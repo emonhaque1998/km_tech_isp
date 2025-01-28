@@ -12,7 +12,7 @@ import {
     Settings,
     Unlink,
     UsersRound,
-    ChartColumnStacked
+    ChartColumnStacked,
 } from "lucide-react";
 import {
     Sidebar,
@@ -33,28 +33,40 @@ const items = [
         title: "Dashboard",
         url: route("dashboard"),
         icon: Home,
+        role: false,
+    },
+    {
+        title: "Dashboard",
+        url: route("dashboard"),
+        icon: Home,
+        role: true,
     },
     {
         title: "Users",
         url: route("users.index"),
         icon: UsersRound,
+        role: true,
     },
     {
         title: "Hyperlinks",
         url: route("hyperlink.index"),
         icon: Unlink,
+        role: true,
     },
     {
         title: "Categories",
         url: route("categories.index"),
         icon: ChartColumnStacked,
+        role: true,
     },
 ];
 
 export default function SideBar({
     children,
     user,
-}: PropsWithChildren<{ user: any }>) {
+}: PropsWithChildren<{
+    user: { id: number; name: string; email: string; role: "admin" | "user" };
+}>) {
     const [navDropdown, setNavDropdown] = useState(false);
     const navDropdownHandler = (event: any) => {
         event.preventDefault();
@@ -82,18 +94,59 @@ export default function SideBar({
                                 </SidebarGroupLabel>
                                 <SidebarGroupContent>
                                     <SidebarMenu>
-                                        {items.map((item) => (
-                                            <SidebarMenuItem key={item.title}>
-                                                <SidebarMenuButton asChild>
-                                                    <Link href={item.url}>
-                                                        <item.icon />
-                                                        <span>
-                                                            {item.title}
-                                                        </span>
-                                                    </Link>
-                                                </SidebarMenuButton>
-                                            </SidebarMenuItem>
-                                        ))}
+                                        {items.map((item) => {
+                                            if (user.role === "admin") {
+                                                if (item.role === true) {
+                                                    return (
+                                                        <SidebarMenuItem
+                                                            key={item.title}
+                                                        >
+                                                            <SidebarMenuButton
+                                                                asChild
+                                                            >
+                                                                <Link
+                                                                    href={
+                                                                        item.url
+                                                                    }
+                                                                >
+                                                                    <item.icon />
+                                                                    <span>
+                                                                        {
+                                                                            item.title
+                                                                        }
+                                                                    </span>
+                                                                </Link>
+                                                            </SidebarMenuButton>
+                                                        </SidebarMenuItem>
+                                                    );
+                                                }
+                                            } else {
+                                                if (item.role === false) {
+                                                    return (
+                                                        <SidebarMenuItem
+                                                            key={item.title}
+                                                        >
+                                                            <SidebarMenuButton
+                                                                asChild
+                                                            >
+                                                                <Link
+                                                                    href={
+                                                                        item.url
+                                                                    }
+                                                                >
+                                                                    <item.icon />
+                                                                    <span>
+                                                                        {
+                                                                            item.title
+                                                                        }
+                                                                    </span>
+                                                                </Link>
+                                                            </SidebarMenuButton>
+                                                        </SidebarMenuItem>
+                                                    );
+                                                }
+                                            }
+                                        })}
                                     </SidebarMenu>
                                 </SidebarGroupContent>
                             </SidebarGroup>

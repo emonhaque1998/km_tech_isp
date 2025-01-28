@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HyperlinkController;
 use App\Http\Controllers\Admin\AddCategoryController;
 use App\Http\Controllers\Admin\AddHyperlinkController;
+use App\Http\Middleware\CheckRole;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -43,7 +44,7 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware("auth", "verified")->group(function () {
+Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function () {
     Route::resource("/hyperlink", HyperlinkController::class)->only(["index", "store"]);
     Route::resource("/users", UserController::class)->only(["index", "show"]);
     Route::resource("/categories", CategoryController::class)->only(["index"]);

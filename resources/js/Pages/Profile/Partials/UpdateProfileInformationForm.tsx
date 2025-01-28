@@ -63,6 +63,7 @@ export default function UpdateProfileInformation({
 
                     <TextInput
                         id="email"
+                        disabled
                         type="email"
                         className="mt-1 block w-full"
                         value={data.email}

@@ -3,6 +3,7 @@ import { Transition } from "@headlessui/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function AddCategory() {
     const {
@@ -18,11 +19,25 @@ export default function AddCategory() {
         slug: "",
     });
 
+    const generateSlug = (name: string) => {
+        return name
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)+/g, "");
+    };
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.value;
+        setData("name", name);
+        setData("slug", generateSlug(name));
+    };
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route("add-category.store"), {
             onFinish: () => reset("name", "slug"),
+            onSuccess: () => toast.success("Category added successfully"),
         });
     };
 
@@ -55,9 +70,7 @@ export default function AddCategory() {
                                             id="name"
                                             value={data.name}
                                             name="name"
-                                            onChange={(e) =>
-                                                setData("name", e.target.value)
-                                            }
+                                            onChange={handleNameChange}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             placeholder="Router"
                                             required
@@ -116,6 +129,7 @@ export default function AddCategory() {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </AuthenticatedLayout>
     );
 }

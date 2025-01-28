@@ -70,6 +70,8 @@ class AddCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Category::destroy($id);
+
+        return Redirect::route('categories.index');
     }
 }

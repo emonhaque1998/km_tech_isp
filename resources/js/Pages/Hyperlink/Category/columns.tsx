@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/Components/ui/checkbox";
 import { Trash2, FilePenLine } from "lucide-react";
 import { Link } from "@inertiajs/react";
+import { ToastContainer, toast } from "react-toastify";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -32,7 +33,13 @@ export const columns: ColumnDef<Category>[] = [
                         <FilePenLine className="text-green-700" />
                     </span>
                 </Link>
-                <Link href={`/delete/${row.original.id}`}>
+                <Link
+                    href={route("add-category.destroy", row.original.id)}
+                    method="delete"
+                    onSuccess={() =>
+                        toast.success("Category deleted successfully")
+                    }
+                >
                     <span className="flex">
                         <Trash2 className="text-red-600" />
                     </span>

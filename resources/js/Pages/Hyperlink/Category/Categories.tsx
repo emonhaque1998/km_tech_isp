@@ -5,8 +5,22 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { Input } from "@/components/ui/input";
+import { ToastContainer, toast } from "react-toastify";
 
-export default function Categories({ categories }: PageProps<{ categories: Category[] }>) {
+export default function Categories({
+    categories,
+}: PageProps<{ categories: Category[] }>) {
+    const [filter, setFilter] = useState("");
+    const [filteredCategories, setFilteredCategories] = useState(categories);
+
+    useEffect(() => {
+        setFilteredCategories(
+            categories.filter((category) =>
+                category.name.toLowerCase().includes(filter.toLowerCase())
+            )
+        );
+    }, [filter, categories]);
+
     return (
         <AuthenticatedLayout
             header={
@@ -26,7 +40,13 @@ export default function Categories({ categories }: PageProps<{ categories: Categ
                             </div>
                             <div className="text-gray-900 py-3 flex flex-row gap-2 w-2/3 items-center justify-end">
                                 <div>
-                                    <Input />
+                                    <Input
+                                        value={filter}
+                                        onChange={(e) =>
+                                            setFilter(e.target.value)
+                                        }
+                                        placeholder="Filter categories"
+                                    />
                                 </div>
                                 <Link
                                     href={route("add-category.index")}
@@ -37,11 +57,15 @@ export default function Categories({ categories }: PageProps<{ categories: Categ
                             </div>
                         </div>
                         <div className="container mx-auto">
-                            <DataTable columns={columns} data={categories} />
+                            <DataTable
+                                columns={columns}
+                                data={filteredCategories}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </AuthenticatedLayout>
     );
 }

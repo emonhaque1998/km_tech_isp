@@ -29,7 +29,7 @@ Route::middleware("auth", "verified")->group(function () {
     Route::resource("/hyperlink", HyperlinkController::class)->only(["index"]);
     Route::resource("/users", UserController::class)->only(["index", "show"]);
     Route::resource("/categories", CategoryController::class)->only(["index"]);
-    Route::resource("/add-category", AddCategoryController::class)->only(["index", "store"]);
+    Route::resource("/add-category", AddCategoryController::class)->only(["index", "store", "destroy"]);
 });
 
 Route::middleware('auth')->group(function () {

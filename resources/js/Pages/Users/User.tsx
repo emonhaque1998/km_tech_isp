@@ -9,6 +9,17 @@ import { Input } from "@/components/ui/input";
 export default function User({ users }: PageProps<{ users: Payment[] }>) {
     const user = usePage().props.auth.user;
 
+    const [filter, setFilter] = useState("");
+    const [filteredUsers, setFilteredUsers] = useState(users);
+
+    useEffect(() => {
+        setFilteredUsers(
+            users.filter((user) =>
+                user.name.toLowerCase().includes(filter.toLowerCase())
+            )
+        );
+    }, [filter, users]);
+
     return (
         <AuthenticatedLayout
             header={
@@ -28,7 +39,13 @@ export default function User({ users }: PageProps<{ users: Payment[] }>) {
                             </div>
                             <div className="text-gray-900 py-3 flex flex-row gap-2 w-2/3 items-center justify-end">
                                 <div>
-                                    <Input />
+                                    <Input
+                                        value={filter}
+                                        placeholder="Filter Users"
+                                        onChange={(e) =>
+                                            setFilter(e.target.value)
+                                        }
+                                    />
                                 </div>
                                 <Link
                                     href=""
@@ -39,7 +56,7 @@ export default function User({ users }: PageProps<{ users: Payment[] }>) {
                             </div>
                         </div>
                         <div className="container mx-auto">
-                            <DataTable columns={columns} data={users} />
+                            <DataTable columns={columns} data={filteredUsers} />
                         </div>
                     </div>
                 </div>

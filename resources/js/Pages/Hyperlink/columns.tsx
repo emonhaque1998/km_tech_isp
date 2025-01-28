@@ -1,41 +1,31 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Trash2, SendHorizontal } from "lucide-react";
+import { Checkbox } from "@/Components/ui/checkbox";
+import { Trash2, FilePenLine } from "lucide-react";
 import { Link } from "@inertiajs/react";
 import { ToastContainer, toast } from "react-toastify";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
+export type Hyperlink = {
     id: number;
-    role: "admin" | "user";
-    // status: "pending" | "processing" | "success" | "failed";
-    name: string;
-    email: string;
+    url: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Hyperlink>[] = [
     {
-        accessorKey: "name",
-        header: "Name",
-    },
-    {
-        accessorKey: "email",
-        header: "Email",
-    },
-    {
-        accessorKey: "role",
-        header: "Role",
+        accessorKey: "url",
+        header: "Urls",
     },
     {
         accessorKey: "actions",
         header: "Actions",
         cell: ({ row }) => (
-            <div className="flex gap-4 items-center">
-                <Link href={route("add-hyperlink.index", row.original.id)}>
+            <div className="flex gap-4">
+                <Link href={`/edit/${row.original.id}`}>
                     <span>
-                        <SendHorizontal className="text-green-700" />
+                        <FilePenLine className="text-green-700" />
                     </span>
                 </Link>
                 <Link

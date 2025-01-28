@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Hyperlink;
 
 class HyperlinkController extends Controller
 {
@@ -13,7 +14,9 @@ class HyperlinkController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Hyperlink/Hyperlink");
+        return Inertia::render("Hyperlink/Hyperlink", [
+            "hyperlinks" => Hyperlink::all(),
+        ]);
     }
 
     /**

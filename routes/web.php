@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HyperlinkController;
 use App\Http\Controllers\Admin\AddCategoryController;
+use App\Http\Controllers\Admin\AddHyperlinkController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -30,6 +31,7 @@ Route::middleware("auth", "verified")->group(function () {
     Route::resource("/users", UserController::class)->only(["index", "show"]);
     Route::resource("/categories", CategoryController::class)->only(["index"]);
     Route::resource("/add-category", AddCategoryController::class)->only(["index", "store", "destroy"]);
+    Route::get("user/{id}/add-hyperlink", [AddHyperlinkController::class, "index"])->name("add-hyperlink.index");
 });
 
 Route::middleware('auth')->group(function () {

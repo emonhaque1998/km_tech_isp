@@ -18,7 +18,7 @@ export default function Authenticated({
         <SidebarProvider>
             <SideBar user={user} />
             <div className="flex flex-col w-full">
-                <Header />
+                <Header user={user} />
                 <main>
                     <SidebarTrigger />
                     {children}

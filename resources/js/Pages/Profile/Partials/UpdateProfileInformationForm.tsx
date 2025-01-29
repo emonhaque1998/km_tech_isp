@@ -5,6 +5,8 @@ import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler } from "react";
+import { useState } from "react";
+import { PageProps } from "@/types"; // Add this import for type definitions
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -15,18 +17,44 @@ export default function UpdateProfileInformation({
     status?: string;
     className?: string;
 }) {
-    const user = usePage().props.auth.user;
+    const user = usePage<PageProps>().props.auth.user; // Add type annotation for usePage
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
+    const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             name: user.name,
             email: user.email,
+            profile_image: null as File | null, // Add type annotation for profile_image
         });
+
+    const [preview, setPreview] = useState<string | null>(null);
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+
+        if (file) {
+            setData("profile_image", file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+
+            // post(route("profile.profileImage"), {
+            //     onSuccess: () => {
+            //         console.log(file);
+            //     },
+            // });
+        }
+    };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        patch(route("profile.update"));
+        post(route("profile.update"), {
+            onSuccess: () => {
+                setPreview(null);
+            },
+        });
     };
 
     return (
@@ -42,6 +70,30 @@ export default function UpdateProfileInformation({
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6">
+                <div>
+                    <InputLabel htmlFor="profile_image" value="Profile Image" />
+
+                    <input
+                        id="profile_image"
+                        type="file"
+                        className="mt-1 block w-full"
+                        onChange={handleImageChange}
+                    />
+
+                    {preview && (
+                        <img
+                            src={preview}
+                            alt="Profile Preview"
+                            className="mt-2 h-20 w-20 rounded-full object-cover"
+                        />
+                    )}
+
+                    <InputError
+                        className="mt-2"
+                        message={errors.profile_image}
+                    />
+                </div>
+
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 

@@ -39,11 +39,9 @@ export const columns: ColumnDef<Payment>[] = [
                     </span>
                 </Link>
                 <Link
-                    href={route("add-category.destroy", row.original.id)}
+                    href={route("users.destroy", row.original.id)}
                     method="delete"
-                    onSuccess={() =>
-                        toast.success("Category deleted successfully")
-                    }
+                    onSuccess={() => toast.success("User deleted successfully")}
                 >
                     <span className="flex">
                         <Trash2 className="text-red-600" />

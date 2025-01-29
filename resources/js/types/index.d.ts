@@ -4,6 +4,7 @@ export interface User {
     role: "admin" | "user";
     email: string;
     email_verified_at?: string;
+    profile_image?: string;
 }
 
 export type PageProps<

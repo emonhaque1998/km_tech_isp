@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -64,6 +67,20 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = Auth::user();
+
+        if($user->id == $id) {
+            return Redirect::route('users.index');
+        }
+
+        $findUser = User::find($id);
+
+        if ($findUser->profile_image) {
+            Storage::disk('public')->delete($user->profile_image);
+        }
+        
+        User::destroy($id);
+
+        return Redirect::route('users.index');
     }
 }

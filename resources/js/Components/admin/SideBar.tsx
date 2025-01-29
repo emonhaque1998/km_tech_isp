@@ -81,7 +81,7 @@ export default function SideBar({
                         <SidebarHeader>
                             <div className="flex justify-center">
                                 {user.role === "admin" ? (
-                                    <ApplicationLogo width="w-24" />
+                                    <ApplicationLogo width="w-24" user={user} />
                                 ) : (
                                     <h1>User</h1>
                                 )}

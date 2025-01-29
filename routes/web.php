@@ -47,7 +47,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function () {
     Route::resource("/hyperlink", HyperlinkController::class)->only(["index", "store"]);
-    Route::resource("/users", UserController::class)->only(["index", "show"]);
+    Route::resource("/users", UserController::class)->only(["index", "show", "destroy"]);
     Route::resource("/categories", CategoryController::class)->only(["index"]);
     Route::resource("/add-category", AddCategoryController::class)->only(["index", "store", "destroy"]);
     Route::resource("/add-user", AddUserController::class)->only(["index", "store"]);
@@ -56,8 +56,9 @@ Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
 });
 
 require __DIR__.'/auth.php';

@@ -1,9 +1,18 @@
 import { useState } from "react";
 import Dropdown from "@/Components/Dropdown";
+import { PropsWithChildren } from "react";
 
-export default function Header() {
+export default function Header({
+    user,
+}: PropsWithChildren<{
+    user: {
+        profile_image?: string;
+    };
+}>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+
+    console.log(user.profile_image);
 
     return (
         <div className=" w-full h-20 shadow-md flex items-center px-10">
@@ -12,7 +21,7 @@ export default function Header() {
                     <Dropdown.Trigger>
                         <img
                             className="w-12 h-12 rounded-full object-cover object-top cursor-pointer"
-                            src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTmSdkNffb_lEKR2CnI_zLNt6uc04wU8bz_5tAPn8UAnJRYhUKxtXDulRUROUBYpOYB_E4zPyRrmTH0vHNN2BQ-Cg"
+                            src={`/storage/${user.profile_image}`}
                             alt=""
                         />
                         <Dropdown.Content>

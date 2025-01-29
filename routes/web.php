@@ -50,7 +50,7 @@ Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function
     Route::resource("/users", UserController::class)->only(["index", "show"]);
     Route::resource("/categories", CategoryController::class)->only(["index"]);
     Route::resource("/add-category", AddCategoryController::class)->only(["index", "store", "destroy"]);
-    Route::resource("/add-user", AddUserController::class)->only(["index", "show"]);
+    Route::resource("/add-user", AddUserController::class)->only(["index", "store"]);
     Route::get("user/{id}/add-hyperlink", [AddHyperlinkController::class, "index"])->name("add-hyperlink.index");
 });
 

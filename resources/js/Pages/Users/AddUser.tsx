@@ -19,14 +19,15 @@ export default function AddUser() {
         name: "",
         email: "",
         password: "",
+        confirmed: "",
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("add-category.store"), {
-            onFinish: () => reset("name", "email"),
-            onSuccess: () => toast.success("Category added successfully"),
+        post(route("add-user.store"), {
+            onFinish: () => reset("name", "email", "password"),
+            onSuccess: () => toast.success("User added successfully"),
         });
     };
 

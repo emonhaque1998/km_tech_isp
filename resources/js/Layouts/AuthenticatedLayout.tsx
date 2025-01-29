@@ -3,6 +3,7 @@ import { PropsWithChildren, ReactNode, useState } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/Components/ui/sidebar";
 import SideBar from "@/Components/admin/SideBar";
 import Header from "@/Components/admin/Header";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Authenticated({
     header,
@@ -23,6 +24,7 @@ export default function Authenticated({
                     {children}
                 </main>
             </div>
+            <ToastContainer />
         </SidebarProvider>
     );
 }

@@ -48,7 +48,7 @@ export default function User({ users }: PageProps<{ users: Payment[] }>) {
                                     />
                                 </div>
                                 <Link
-                                    href=""
+                                    href={route("add-user.index")}
                                     className="bg-[#e67e22] text-white py-2 max-md:py-2 max-md:px-2 max-md:text-sm rounded-lg hover:bg-[#d35400] px-3"
                                 >
                                     Add User

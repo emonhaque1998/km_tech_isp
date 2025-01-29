@@ -2,16 +2,17 @@
 
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AddUserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HyperlinkController;
 use App\Http\Controllers\Admin\AddCategoryController;
 use App\Http\Controllers\Admin\AddHyperlinkController;
-use App\Http\Middleware\CheckRole;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -49,6 +50,7 @@ Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function
     Route::resource("/users", UserController::class)->only(["index", "show"]);
     Route::resource("/categories", CategoryController::class)->only(["index"]);
     Route::resource("/add-category", AddCategoryController::class)->only(["index", "store", "destroy"]);
+    Route::resource("/add-user", AddUserController::class)->only(["index", "show"]);
     Route::get("user/{id}/add-hyperlink", [AddHyperlinkController::class, "index"])->name("add-hyperlink.index");
 });
 

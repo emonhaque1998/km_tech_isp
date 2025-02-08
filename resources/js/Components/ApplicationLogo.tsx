@@ -5,8 +5,8 @@ export default function ApplicationLogo({
     width,
     user,
 }: {
-    width?: string;
-    user: {
+    width?: string | undefined;
+    user?: {
         profile_image?: string;
         id: number;
         name: string;
@@ -16,11 +16,20 @@ export default function ApplicationLogo({
 }) {
     return (
         <Link href={route("dashboard")}>
-            <img
-                src={`/storage/${user.profile_image}`}
-                alt=""
-                className={width ? width : "w-36"}
-            />
+            {user && (
+                <img
+                    src={`/storage/${user.profile_image}`}
+                    alt=""
+                    className={width ? width : "w-36"}
+                />
+            )}
+            {!user && (
+                <img
+                    src="/assets/image/logo.png"
+                    alt=""
+                    className={width ? width : "w-36"}
+                />
+            )}
         </Link>
     );
 }

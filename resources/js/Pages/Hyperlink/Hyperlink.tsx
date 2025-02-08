@@ -4,7 +4,7 @@ import { DataTable } from "@/Components/DataTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/Components/ui/input";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function Categories({

@@ -4,7 +4,7 @@ import { DataTable } from "./data-table";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/Components/ui/input";
 
 export default function User({ users }: PageProps<{ users: Payment[] }>) {
     const user = usePage().props.auth.user;

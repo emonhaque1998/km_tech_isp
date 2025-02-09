@@ -6,12 +6,19 @@ import { ColumnDef } from "@tanstack/react-table";
 // You can use a Zod schema here if you want.
 export type Hyperlink = {
     id: number;
-    url: string;
+    alternative: string;
+    category: {
+        name: string;
+    };
 };
 
 export const columns: ColumnDef<Hyperlink>[] = [
     {
-        accessorKey: "url",
-        header: "Url",
+        accessorKey: "alternative",
+        header: "Name",
+    },
+    {
+        accessorKey: "category.name",
+        header: "Category Name",
     },
 ];

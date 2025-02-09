@@ -25,23 +25,26 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
-    $hyperlinks = $user->hyperlink;
+    $allHyperlinks = $user->hyperlink;
+    $hyperlinks = Auth::user()->hyperlink;
+    
     $categories = Category::whereHas('hyperlink', function ($query) use ($user) {
         $query->where('user_id', $user->id);
     })->with(['hyperlink' => function ($query) use ($user) {
         $query->where('user_id', $user->id);
     }])->get();
 
-    if ($hyperlinks) {
-        $hyperlinks = $hyperlinks->load(['category']);
-        $categoryCounts = $hyperlinks->groupBy('category_id')->map->count();
-        $hyperlinks->each(function ($hyperlink) use ($categoryCounts) {
+    if ($allHyperlinks) {
+        $allHyperlinks = $allHyperlinks->load(['category']);
+        $categoryCounts = $allHyperlinks->groupBy('category_id')->map->count();
+        $allHyperlinks->each(function ($hyperlink) use ($categoryCounts) {
             $hyperlink->category_count = $categoryCounts[$hyperlink->category_id] ?? 0;
         });
     }
 
     return Inertia::render('Dashboard', [
         'categories' => $categories,
+        "hyperlinks" => $hyperlinks
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

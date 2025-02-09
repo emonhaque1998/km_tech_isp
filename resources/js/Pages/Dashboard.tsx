@@ -13,9 +13,11 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import { Input } from "@/Components/ui/input";
 
 export default function Dashboard({
     categories,
+    hyperlinks,
 }: PageProps<{
     categories: [
         {
@@ -35,9 +37,20 @@ export default function Dashboard({
             ];
         }
     ];
+    hyperlinks: Hyperlink[];
 }>) {
-    const [showTable, setTable] = useState(false);
-    const [categoryId, setCategoryId] = useState(null as number | null);
+    const [filter, setFilter] = useState("");
+    const [filteredHyperlinks, setFilteredHyperlinks] = useState(hyperlinks);
+
+    useEffect(() => {
+        setFilteredHyperlinks(
+            hyperlinks.filter((hyperlink) =>
+                hyperlink.alternative
+                    .toLowerCase()
+                    .includes(filter.toLowerCase())
+            )
+        );
+    }, [filter, hyperlinks]);
     return (
         <AuthenticatedLayout
             header={
@@ -63,17 +76,7 @@ export default function Dashboard({
                                                 }}
                                                 className={`hover:bg-[#d35400] cursor-pointer py-10 px-5 rounded-lg`}
                                             >
-                                                <Link
-                                                    href=""
-                                                    onClick={(e: any) => {
-                                                        e.preventDefault();
-                                                        setTable(true);
-                                                        setCategoryId(
-                                                            category.id
-                                                        );
-                                                    }}
-                                                    className=""
-                                                >
+                                                <Link href="" className="">
                                                     <input
                                                         type="hidden"
                                                         value={category.id}
@@ -123,23 +126,27 @@ export default function Dashboard({
                         </div>
                     </div>
 
-                    {showTable && categoryId !== null && (
-                        <div className="mt-5 overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                            <div className="p-6 text-gray-900">
-                                <div className="container mx-auto">
-                                    <DataTable
-                                        columns={columns}
-                                        data={
-                                            categories.find(
-                                                (category) =>
-                                                    category.id === categoryId
-                                            )?.hyperlink || []
+                    <div className="mt-5 overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="p-6 text-gray-900 flex flex-col gap-4">
+                            <div className="flex justify-end">
+                                <div className="w-52">
+                                    <Input
+                                        value={filter}
+                                        placeholder="Filter Users"
+                                        onChange={(e) =>
+                                            setFilter(e.target.value)
                                         }
                                     />
                                 </div>
                             </div>
+                            <div className="container mx-auto">
+                                <DataTable
+                                    columns={columns}
+                                    data={filteredHyperlinks}
+                                />
+                            </div>
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
         </AuthenticatedLayout>

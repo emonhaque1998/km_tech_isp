@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Hyperlink extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['url', "category_id", "user_id", "alternative"];
 
     public function category()

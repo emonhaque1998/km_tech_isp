@@ -34,6 +34,7 @@ class AddCategoryController extends Controller
         $request->validate([
             'name' => ['required'],
             "slug" => ["required", "unique:categories,slug"],
+            "color" => ['required'],
         ]);
 
         Category::create($request->all());

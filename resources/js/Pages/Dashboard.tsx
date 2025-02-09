@@ -22,6 +22,7 @@ export default function Dashboard({
             id: number;
             name: string;
             slug: string;
+            color: string;
             hyperlink: [
                 {
                     id: number;
@@ -55,7 +56,9 @@ export default function Dashboard({
                                 {categories.map((category) => {
                                     return (
                                         <DropdownMenu>
-                                            <DropdownMenuTrigger className="bg-[#e67e22] hover:bg-[#d35400] cursor-pointer py-10 px-5 rounded-lg">
+                                            <DropdownMenuTrigger
+                                                className={`hover:bg-[#d35400] cursor-pointer py-10 px-5 rounded-lg bg-[${category.color}]`}
+                                            >
                                                 <Link
                                                     key={category.id}
                                                     href=""

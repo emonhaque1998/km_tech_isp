@@ -17,6 +17,7 @@ export default function AddCategory() {
     } = useForm({
         name: "",
         slug: "",
+        color: "",
     });
 
     const generateSlug = (name: string) => {
@@ -103,6 +104,24 @@ export default function AddCategory() {
                                             message={errors.slug}
                                             className=""
                                         />
+                                    </div>
+                                    <div>
+                                        <label
+                                            htmlFor="hs-color-input"
+                                            className="block text-sm font-medium mb-2 dark:text-white"
+                                        >
+                                            Color picker
+                                        </label>
+                                        <input
+                                            type="color"
+                                            className="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700"
+                                            id="hs-color-input"
+                                            onChange={(e) =>
+                                                setData("color", e.target.value)
+                                            }
+                                            value={data.color}
+                                            title="Choose your color"
+                                        ></input>
                                     </div>
                                 </div>
                                 <div className="flex gap-3 items-center flex-row">

@@ -44,7 +44,7 @@ class HyperlinkController extends Controller
 
         Hyperlink::create($request->all());
 
-        return Redirect::route("hyperlink.index");
+        return Redirect::back();
     }
 
     /**

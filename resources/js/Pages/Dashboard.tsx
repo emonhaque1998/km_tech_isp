@@ -30,6 +30,7 @@ export default function Dashboard({
                     slug: string;
                     category_count: number;
                     category: { id: number; name: string };
+                    alternative: string;
                 }
             ];
         }
@@ -99,11 +100,18 @@ export default function Dashboard({
                                                 {category.hyperlink.map(
                                                     (hyper) => {
                                                         return (
-                                                            <DropdownMenuItem
+                                                            <a
+                                                                href={hyper.url}
+                                                                target="_blank"
+                                                                className="cursor-pointer"
                                                                 key={hyper.id}
                                                             >
-                                                                {hyper.url}
-                                                            </DropdownMenuItem>
+                                                                <DropdownMenuItem className="cursor-pointer">
+                                                                    {
+                                                                        hyper.alternative
+                                                                    }
+                                                                </DropdownMenuItem>
+                                                            </a>
                                                         );
                                                     }
                                                 )}

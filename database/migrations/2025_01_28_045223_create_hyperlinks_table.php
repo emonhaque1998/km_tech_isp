@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('url');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string("alternative");
             $table->timestamps();
         });
     }

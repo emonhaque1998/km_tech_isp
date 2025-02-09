@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hyperlink extends Model
 {
-    protected $fillable = ['url', "category_id", "user_id"];
+    protected $fillable = ['url', "category_id", "user_id", "alternative"];
 
     public function category()
     {

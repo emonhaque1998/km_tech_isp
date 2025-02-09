@@ -37,7 +37,6 @@ export default function Dashboard({
 }>) {
     const [showTable, setTable] = useState(false);
     const [categoryId, setCategoryId] = useState(null as number | null);
-
     return (
         <AuthenticatedLayout
             header={
@@ -55,12 +54,15 @@ export default function Dashboard({
                             <div className="grid grid-cols-4 gap-5">
                                 {categories.map((category) => {
                                     return (
-                                        <DropdownMenu>
+                                        <DropdownMenu key={category.id}>
                                             <DropdownMenuTrigger
-                                                className={`hover:bg-[#d35400] cursor-pointer py-10 px-5 rounded-lg bg-[${category.color}]`}
+                                                style={{
+                                                    backgroundColor:
+                                                        category.color,
+                                                }}
+                                                className={`hover:bg-[#d35400] cursor-pointer py-10 px-5 rounded-lg`}
                                             >
                                                 <Link
-                                                    key={category.id}
                                                     href=""
                                                     onClick={(e: any) => {
                                                         e.preventDefault();
@@ -97,7 +99,9 @@ export default function Dashboard({
                                                 {category.hyperlink.map(
                                                     (hyper) => {
                                                         return (
-                                                            <DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                key={hyper.id}
+                                                            >
                                                                 {hyper.url}
                                                             </DropdownMenuItem>
                                                         );

@@ -40,11 +40,6 @@ export const columns: ColumnDef<Hyperlink>[] = [
         header: "Actions",
         cell: ({ row }) => (
             <div className="flex gap-4">
-                <Link href={`/edit/${row.original.id}`}>
-                    <span>
-                        <FilePenLine className="text-green-700" />
-                    </span>
-                </Link>
                 <Link
                     href={route("add-category.destroy", row.original.id)}
                     method="delete"

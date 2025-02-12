@@ -58,7 +58,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd($request);
+        $findCategory = Category::findOrFail($id);
+        
+        $findCategory->update([
+            "name" => $request->name,
+            "slug" => $request->slug,
+            "color" => $request->color,
+            "isLive" => $request->isLive,
+            "ifream" => $request->ifream
+        ]);
     }
 
     /**

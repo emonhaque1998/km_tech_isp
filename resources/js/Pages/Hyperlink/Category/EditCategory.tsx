@@ -43,7 +43,7 @@ export default function EditCategory({
         e.preventDefault();
 
         patch(route("categories.update", category.id), {
-            onSuccess: () => toast.success("Category added successfully"),
+            onSuccess: (respons) => toast.success("Update successfully"),
         });
     };
 

@@ -18,7 +18,7 @@ export default function AddCategory() {
         name: "",
         slug: "",
         color: "",
-        isLive: "",
+        isLive: "0",
         ifream: "",
     });
 

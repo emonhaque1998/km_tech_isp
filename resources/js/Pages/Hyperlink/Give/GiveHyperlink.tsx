@@ -150,14 +150,16 @@ export default function GiveHyperlink({
                                                 Select Category
                                             </option>
                                             {categories.map((category) => {
-                                                return (
-                                                    <option
-                                                        value={category.id}
-                                                        key={category.id}
-                                                    >
-                                                        {category.name}
-                                                    </option>
-                                                );
+                                                if (category.isLive == "0") {
+                                                    return (
+                                                        <option
+                                                            value={category.id}
+                                                            key={category.id}
+                                                        >
+                                                            {category.name}
+                                                        </option>
+                                                    );
+                                                }
                                             })}
                                         </select>
                                         <InputError

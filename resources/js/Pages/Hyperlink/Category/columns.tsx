@@ -12,6 +12,7 @@ export type Category = {
     id: number;
     slug: string;
     name: string;
+    isLive: string;
 };
 
 export const columns: ColumnDef<Category>[] = [

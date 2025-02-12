@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = ["name", "slug", "color"];
+    protected $fillable = ["name", "slug", "color", "isLive", "ifream"];
 
     public function hyperlink()
     {

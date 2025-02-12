@@ -13,6 +13,8 @@ export type Category = {
     slug: string;
     name: string;
     isLive: string;
+    color: string;
+    ifream: string;
 };
 
 export const columns: ColumnDef<Category>[] = [
@@ -29,7 +31,7 @@ export const columns: ColumnDef<Category>[] = [
         header: "Actions",
         cell: ({ row }) => (
             <div className="flex gap-4">
-                <Link href={`/edit/${row.original.id}`}>
+                <Link href={route("categories.show", row.original.id)}>
                     <span>
                         <FilePenLine className="text-green-700" />
                     </span>

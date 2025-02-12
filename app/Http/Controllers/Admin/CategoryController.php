@@ -40,7 +40,9 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Inertia::render("Hyperlink/Category/EditCategory", [
+            "category" => Category::find($id)
+        ]);
     }
 
     /**
@@ -56,7 +58,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($request);
     }
 
     /**

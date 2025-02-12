@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string("color");
-            $table->enum("isLive", ["1", "0"])->default("0");
+            $table->boolean("isLive")->default(false);
             $table->text("ifream")->nullable();
             $table->timestamps();
         });

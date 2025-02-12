@@ -18,6 +18,8 @@ export default function AddCategory() {
         name: "",
         slug: "",
         color: "",
+        isLive: "",
+        ifream: "",
     });
 
     const generateSlug = (name: string) => {
@@ -123,6 +125,51 @@ export default function AddCategory() {
                                             title="Choose your color"
                                         ></input>
                                     </div>
+                                    <div>
+                                        <div className="flex items-center mb-4">
+                                            <input
+                                                id="isLive"
+                                                type="checkbox"
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        setData("isLive", "1");
+                                                    } else {
+                                                        setData("isLive", "0");
+                                                    }
+                                                }}
+                                                value=""
+                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            />
+                                            <label
+                                                htmlFor="isLive"
+                                                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                            >
+                                                Is Live
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {data.isLive == "1" && (
+                                        <div>
+                                            <label
+                                                htmlFor="ifream"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                            >
+                                                Give you Ifream
+                                            </label>
+                                            <textarea
+                                                id="ifream"
+                                                rows={4}
+                                                onChange={(e) => {
+                                                    setData(
+                                                        "ifream",
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Write your thoughts here..."
+                                            ></textarea>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="flex gap-3 items-center flex-row">
                                     <button

@@ -176,11 +176,16 @@ export default function Dashboard({
                     </div>
 
                     {showLive ? (
-                        <iframe
-                            src={liveUrl ? liveUrl : ""}
-                            width="100%"
-                            height="600"
-                        ></iframe>
+                        liveUrl ? (
+                            <div
+                                className="content"
+                                dangerouslySetInnerHTML={{
+                                    __html: liveUrl,
+                                }}
+                            ></div>
+                        ) : (
+                            ""
+                        )
                     ) : (
                         <div className="mt-5 overflow-hidden bg-white shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900 flex flex-col gap-4">

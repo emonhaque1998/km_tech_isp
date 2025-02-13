@@ -28,8 +28,10 @@ Route::get('/dashboard', function () {
     $allHyperlinks = $user->hyperlink;
     $hyperlinks = Auth::user()->hyperlink;
     
-    $categories = Category::whereHas('hyperlink', function ($query) use ($user) {
-        $query->where('user_id', $user->id);
+    $categories = Category::where(function ($query) use ($user) {
+        $query->whereHas('hyperlink', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->orWhere('isLive', "1");
     })->with(['hyperlink' => function ($query) use ($user) {
         $query->where('user_id', $user->id);
     }])->get();

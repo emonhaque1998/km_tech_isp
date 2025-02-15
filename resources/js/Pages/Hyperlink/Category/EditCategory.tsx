@@ -51,7 +51,7 @@ export default function EditCategory({
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Add Category
+                    Edit Category
                 </h2>
             }
         >
@@ -60,7 +60,7 @@ export default function EditCategory({
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="py-6 text-gray-900">Add Category</div>
+                        <div className="py-6 text-gray-900">Edit Category</div>
                         <div className="px-6">
                             <form onSubmit={submit}>
                                 <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -185,7 +185,7 @@ export default function EditCategory({
                                         type="submit"
                                         className="text-white bg-[#e67e22] hover:bg-[#d35400] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     >
-                                        Add Category
+                                        Update Category
                                     </button>
                                     <Transition
                                         show={recentlySuccessful}

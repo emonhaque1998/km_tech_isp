@@ -6,19 +6,21 @@ import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { Input } from "@/Components/ui/input";
 
-export default function User({ users }: PageProps<{ users: Payment[] }>) {
+export default function User({
+    users,
+}: PageProps<{ users: { data: Payment[]; links: any } }>) {
     const user = usePage().props.auth.user;
 
     const [filter, setFilter] = useState("");
-    const [filteredUsers, setFilteredUsers] = useState(users);
+    const [filteredUsers, setFilteredUsers] = useState(users.data);
 
     useEffect(() => {
         setFilteredUsers(
-            users.filter((user) =>
+            users.data.filter((user) =>
                 user.name.toLowerCase().includes(filter.toLowerCase())
             )
         );
-    }, [filter, users]);
+    }, [filter, users.data]);
 
     return (
         <AuthenticatedLayout
@@ -59,6 +61,30 @@ export default function User({ users }: PageProps<{ users: Payment[] }>) {
                             <DataTable columns={columns} data={filteredUsers} />
                         </div>
                     </div>
+                </div>
+
+                <div className="flex justify-between mt-4">
+                    {users.links.map((link: any) => {
+                        console.log(link.label);
+                        return <Link href={link.url}>{link.label}</Link>;
+                    })}
+
+                    {users.links.prev && users.links.prev.url && (
+                        <Link
+                            href={users.links.prev.url}
+                            className="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400"
+                        >
+                            Previous
+                        </Link>
+                    )}
+                    {users.links.next && users.links.next.url && (
+                        <Link
+                            href={users.links.next.url}
+                            className="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400"
+                        >
+                            Next
+                        </Link>
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>

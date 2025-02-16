@@ -35,27 +35,36 @@ export default function Dashboard({
                     category_count: number;
                     category: { id: number; name: string };
                     alternative: string;
+                    links: any;
+                    prev_page_url: string;
+                    next_page_url: string;
                 }
             ];
         }
     ];
-    hyperlinks: Hyperlink[];
+    hyperlinks: {
+        data: Hyperlink[];
+        links: any;
+        prev_page_url: string;
+        next_page_url: string;
+    };
 }>) {
-    console.log(categories);
     const [filter, setFilter] = useState("");
-    const [filteredHyperlinks, setFilteredHyperlinks] = useState(hyperlinks);
+    const [filteredHyperlinks, setFilteredHyperlinks] = useState(
+        hyperlinks.data
+    );
     const [showLive, setLive] = useState(false);
     const [liveUrl, setLiveUrl] = useState("");
 
     useEffect(() => {
         setFilteredHyperlinks(
-            hyperlinks.filter((hyperlink) =>
+            hyperlinks.data.filter((hyperlink) =>
                 hyperlink.alternative
                     .toLowerCase()
                     .includes(filter.toLowerCase())
             )
         );
-    }, [filter, hyperlinks]);
+    }, [filter, hyperlinks.data]);
     return (
         <AuthenticatedLayout
             header={
@@ -75,6 +84,7 @@ export default function Dashboard({
                                     if (category.isLive == "1") {
                                         return (
                                             <div
+                                                key={category.id}
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     setLive(true);

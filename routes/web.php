@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HyperlinkController;
 use App\Http\Controllers\Admin\AddCategoryController;
 use App\Http\Controllers\Admin\AddHyperlinkController;
+use App\Models\Hyperlink;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -26,7 +27,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $user = Auth::user();
     $allHyperlinks = $user->hyperlink;
-    $hyperlinks = Auth::user()->hyperlink;
+    $hyperlinks = Hyperlink::where("user_id", $user->id)->paginate(1);
     
     $categories = Category::where(function ($query) use ($user) {
         $query->whereHas('hyperlink', function ($query) use ($user) {
@@ -34,7 +35,7 @@ Route::get('/dashboard', function () {
         })->orWhere('isLive', "1");
     })->with(['hyperlink' => function ($query) use ($user) {
         $query->where('user_id', $user->id);
-    }])->get();
+    }])->get(); // Added pagination
 
     if ($allHyperlinks) {
         $allHyperlinks = $allHyperlinks->load(['category']);

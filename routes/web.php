@@ -27,7 +27,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $user = Auth::user();
     $allHyperlinks = $user->hyperlink;
-    $hyperlinks = Hyperlink::where("user_id", $user->id)->paginate(1);
+    $hyperlinks = Hyperlink::where("user_id", $user->id)->paginate(10);
     
     $categories = Category::where(function ($query) use ($user) {
         $query->whereHas('hyperlink', function ($query) use ($user) {

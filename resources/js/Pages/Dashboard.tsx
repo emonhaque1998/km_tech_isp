@@ -203,7 +203,7 @@ export default function Dashboard({
                                     <div className="w-52">
                                         <Input
                                             value={filter}
-                                            placeholder="Filter Users"
+                                            placeholder="Filter Hyperlinks"
                                             onChange={(e) =>
                                                 setFilter(e.target.value)
                                             }
@@ -215,6 +215,30 @@ export default function Dashboard({
                                         columns={columns}
                                         data={filteredHyperlinks}
                                     />
+                                </div>
+                                <div
+                                    className={`flex mt-5 gap-5 ${
+                                        hyperlinks.prev_page_url
+                                            ? "justify-between"
+                                            : "justify-end"
+                                    }`}
+                                >
+                                    {hyperlinks.prev_page_url && (
+                                        <Link
+                                            href={hyperlinks.prev_page_url}
+                                            className="bg-[#e67e22] hover:bg-[#d35400] text-white py-2 px-4 rounded-lg"
+                                        >
+                                            Previous
+                                        </Link>
+                                    )}
+                                    {hyperlinks.next_page_url && (
+                                        <Link
+                                            href={hyperlinks.next_page_url}
+                                            className="bg-[#e67e22] hover:bg-[#d35400] text-white py-2 px-4 rounded-lg"
+                                        >
+                                            Next
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                         </div>

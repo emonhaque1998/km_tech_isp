@@ -16,7 +16,7 @@ class HyperlinkController extends Controller
      */
     public function index()
     {
-        $hyperlinks = Hyperlink::with(['user', "category"])->get();
+        $hyperlinks = Hyperlink::with(['user', "category"])->paginate(10); // Paginate hyperlinks with 10 per page
         
         return Inertia::render("Hyperlink/Hyperlink", [
             "hyperlinks" => $hyperlinks,

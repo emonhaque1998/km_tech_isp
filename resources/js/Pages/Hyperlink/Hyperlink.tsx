@@ -9,17 +9,26 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function Categories({
     hyperlinks,
-}: PageProps<{ hyperlinks: Hyperlink[] }>) {
+}: PageProps<{
+    hyperlinks: {
+        data: Hyperlink[];
+        links: any;
+        prev_page_url: string;
+        next_page_url: string;
+    };
+}>) {
     const [filter, setFilter] = useState("");
-    const [filteredHyperlinks, setFilteredHyperlinks] = useState(hyperlinks);
+    const [filteredHyperlinks, setFilteredHyperlinks] = useState(
+        hyperlinks.data
+    );
 
     useEffect(() => {
         setFilteredHyperlinks(
-            hyperlinks.filter((hyperlink) =>
+            hyperlinks.data.filter((hyperlink) =>
                 hyperlink.url.toLowerCase().includes(filter.toLowerCase())
             )
         );
-    }, [filter, hyperlinks]);
+    }, [filter, hyperlinks.data]);
 
     return (
         <AuthenticatedLayout
@@ -55,6 +64,30 @@ export default function Categories({
                                 columns={columns}
                                 data={filteredHyperlinks}
                             />
+                            <div
+                                className={`flex mt-5 gap-5 ${
+                                    hyperlinks.prev_page_url
+                                        ? "justify-between"
+                                        : "justify-end"
+                                }`}
+                            >
+                                {hyperlinks.prev_page_url && (
+                                    <Link
+                                        href={hyperlinks.prev_page_url}
+                                        className="bg-[#e67e22] hover:bg-[#d35400] text-white py-2 px-4 rounded-lg"
+                                    >
+                                        Previous
+                                    </Link>
+                                )}
+                                {hyperlinks.next_page_url && (
+                                    <Link
+                                        href={hyperlinks.next_page_url}
+                                        className="bg-[#e67e22] hover:bg-[#d35400] text-white py-2 px-4 rounded-lg"
+                                    >
+                                        Next
+                                    </Link>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

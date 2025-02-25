@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         return Inertia::render("Hyperlink/Category/Categories", [
-            "categories" => Category::all()
+            "categories" => Category::paginate(10)
         ]);
     }
 

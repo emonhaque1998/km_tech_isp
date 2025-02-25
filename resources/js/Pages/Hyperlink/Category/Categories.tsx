@@ -9,17 +9,26 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function Categories({
     categories,
-}: PageProps<{ categories: Category[] }>) {
+}: PageProps<{
+    categories: {
+        data: Category[];
+        links: any;
+        prev_page_url: string;
+        next_page_url: string;
+    };
+}>) {
     const [filter, setFilter] = useState("");
-    const [filteredCategories, setFilteredCategories] = useState(categories);
+    const [filteredCategories, setFilteredCategories] = useState(
+        categories.data
+    );
 
     useEffect(() => {
         setFilteredCategories(
-            categories.filter((category) =>
+            categories.data.filter((category) =>
                 category.name.toLowerCase().includes(filter.toLowerCase())
             )
         );
-    }, [filter, categories]);
+    }, [filter, categories.data]);
 
     return (
         <AuthenticatedLayout
@@ -61,6 +70,30 @@ export default function Categories({
                                 columns={columns}
                                 data={filteredCategories}
                             />
+                            <div
+                                className={`flex mt-5 gap-5 ${
+                                    categories.prev_page_url
+                                        ? "justify-between"
+                                        : "justify-end"
+                                }`}
+                            >
+                                {categories.prev_page_url && (
+                                    <Link
+                                        href={categories.prev_page_url}
+                                        className="bg-[#e67e22] hover:bg-[#d35400] text-white py-2 px-4 rounded-lg"
+                                    >
+                                        Previous
+                                    </Link>
+                                )}
+                                {categories.next_page_url && (
+                                    <Link
+                                        href={categories.next_page_url}
+                                        className="bg-[#e67e22] hover:bg-[#d35400] text-white py-2 px-4 rounded-lg"
+                                    >
+                                        Next
+                                    </Link>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

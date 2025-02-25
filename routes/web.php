@@ -5,7 +5,6 @@ use App\Models\Category;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AddUserController;
@@ -15,19 +14,12 @@ use App\Http\Controllers\Admin\AddCategoryController;
 use App\Http\Controllers\Admin\AddHyperlinkController;
 use App\Models\Hyperlink;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
     $allHyperlinks = $user->hyperlink;
-    $hyperlinks = Hyperlink::where("user_id", $user->id)->paginate(10);
+    $hyperlinks = Hyperlink::where("user_id", $user->id)->with("category")->paginate(10);
+    $hyperlinkCount = Hyperlink::where("user_id", $user->id)->count();
     
     $categories = Category::where(function ($query) use ($user) {
         $query->whereHas('hyperlink', function ($query) use ($user) {
@@ -47,7 +39,8 @@ Route::get('/dashboard', function () {
 
     return Inertia::render('Dashboard', [
         'categories' => $categories,
-        "hyperlinks" => $hyperlinks
+        "hyperlinks" => $hyperlinks,
+        "hyperlinksCount" => $hyperlinkCount
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

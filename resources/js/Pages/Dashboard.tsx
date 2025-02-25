@@ -18,7 +18,9 @@ import { Input } from "@/Components/ui/input";
 export default function Dashboard({
     categories,
     hyperlinks,
+    hyperlinksCount,
 }: PageProps<{
+    hyperlinksCount: number;
     categories: [
         {
             id: number;
@@ -199,7 +201,8 @@ export default function Dashboard({
                     ) : (
                         <div className="mt-5 overflow-hidden bg-white shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900 flex flex-col gap-4">
-                                <div className="flex justify-end">
+                                <div className="flex flex-row justify-between items-center">
+                                    <div>{`Hyperlinks ${hyperlinks.data.length} of ${hyperlinksCount}`}</div>
                                     <div className="w-52">
                                         <Input
                                             value={filter}

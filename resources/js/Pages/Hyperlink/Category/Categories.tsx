@@ -6,6 +6,7 @@ import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { Input } from "@/Components/ui/input";
 import { ToastContainer, toast } from "react-toastify";
+import DailogBox from "@/Components/admin/DailogBox";
 
 export default function Categories({
     categories,
@@ -57,6 +58,7 @@ export default function Categories({
                                         placeholder="Filter categories"
                                     />
                                 </div>
+                                <DailogBox btnName="Set Colume Number" />
                                 <Link
                                     href={route("add-category.index")}
                                     className="bg-[#e67e22] text-white py-2 max-md:py-2 max-md:px-2 max-md:text-sm rounded-lg hover:bg-[#d35400] px-3"

@@ -19,7 +19,9 @@ export default function Dashboard({
     categories,
     hyperlinks,
     hyperlinksCount,
+    website,
 }: PageProps<{
+    website: { col_number: number };
     hyperlinksCount: number;
     categories: [
         {
@@ -81,7 +83,9 @@ export default function Dashboard({
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <div className="grid grid-cols-4 gap-5">
+                            <div
+                                className={`grid grid-cols-${website.col_number} gap-5`}
+                            >
                                 {categories.map((category) => {
                                     if (category.isLive == "1") {
                                         return (
@@ -152,9 +156,6 @@ export default function Dashboard({
                                                     </Link>
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent>
-                                                    <DropdownMenuLabel>
-                                                        {category.name}
-                                                    </DropdownMenuLabel>
                                                     <DropdownMenuSeparator />
                                                     {category.hyperlink.map(
                                                         (hyper) => {

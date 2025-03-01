@@ -2,18 +2,24 @@
 
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Models\Hyperlink;
+use App\Models\ViewWebsite;
 use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AddUserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HyperlinkController;
 use App\Http\Controllers\Admin\AddCategoryController;
+use App\Http\Controllers\Admin\ViewWebsiteController;
 use App\Http\Controllers\Admin\AddHyperlinkController;
-use App\Models\Hyperlink;
 
+Route::get("/", function () {
+    return Redirect::route("login");
+})->name("welcome");
 
 Route::get('/dashboard', function () {
     $user = Auth::user();
@@ -40,7 +46,8 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
         'categories' => $categories,
         "hyperlinks" => $hyperlinks,
-        "hyperlinksCount" => $hyperlinkCount
+        "hyperlinksCount" => $hyperlinkCount,
+        "website" => ViewWebsite::first()
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -51,6 +58,7 @@ Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function
     Route::resource("/add-category", AddCategoryController::class)->only(["index", "store", "destroy"]);
     Route::resource("/add-user", AddUserController::class)->only(["index", "store"]);
     Route::get("user/{id}/add-hyperlink", [AddHyperlinkController::class, "index"])->name("add-hyperlink.index");
+    Route::post("/website", [ViewWebsiteController::class, "setColumeMax"])->name("add-website-colume.store");
 });
 
 Route::middleware('auth')->group(function () {

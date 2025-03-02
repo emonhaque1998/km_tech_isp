@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\HyperlinkController;
 use App\Http\Controllers\Admin\AddCategoryController;
 use App\Http\Controllers\Admin\ViewWebsiteController;
 use App\Http\Controllers\Admin\AddHyperlinkController;
+use App\Http\Controllers\Admin\SearchController;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get("/", function () {
     return Redirect::route("login");
@@ -65,14 +67,20 @@ Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function
     Route::resource("/add-user", AddUserController::class)->only(["index", "store"]);
     Route::get("user/{id}/add-hyperlink", [AddHyperlinkController::class, "index"])->name("add-hyperlink.index");
     Route::post("/website", [ViewWebsiteController::class, "setColumeMax"])->name("add-website-colume.store");
-
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post("/search-post", [SearchController::class, "searchHyperlinksForDashboard"])->name("search-dashboard.search");
     
+});
+
+
+Route::get('/create-symlink', function () {
+    Artisan::call('storage:link');
+    return response()->json(['message' => 'Symbolic link created successfully']);
 });
 
 require __DIR__.'/auth.php';

@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { Category } from "./Hyperlink/Category/columns";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { Input } from "@/Components/ui/input";
+import { FormEventHandler } from "react";
 
 export default function Dashboard({
     categories,
@@ -60,6 +61,16 @@ export default function Dashboard({
     const [showLive, setLive] = useState(false);
     const [liveUrl, setLiveUrl] = useState("");
 
+    const {
+        data,
+        setData,
+        get,
+        processing,
+        errors,
+        reset,
+        recentlySuccessful,
+    } = useForm({ search: "" });
+
     useEffect(() => {
         setFilteredHyperlinks(
             hyperlinks.data.filter((hyperlink) =>
@@ -69,6 +80,18 @@ export default function Dashboard({
             )
         );
     }, [filter, hyperlinks.data]);
+
+    const submit: FormEventHandler = (e: any) => {
+        e.preventDefault();
+        setData("search", e.target.value);
+
+        get(route("dashboard"), {
+            onError: (error) => {
+                console.log(error);
+            },
+        });
+    };
+
     return (
         <AuthenticatedLayout
             header={
@@ -208,18 +231,17 @@ export default function Dashboard({
                                     <div>{`Hyperlinks ${hyperlinks.data.length} of ${hyperlinksCount}`}</div>
                                     <div className="w-52">
                                         <Input
-                                            value={filter}
+                                            value={data.search}
+                                            type="text"
                                             placeholder="Filter Hyperlinks"
-                                            onChange={(e) =>
-                                                setFilter(e.target.value)
-                                            }
+                                            onChange={submit}
                                         />
                                     </div>
                                 </div>
                                 <div className="container mx-auto">
                                     <DataTable
                                         columns={columns}
-                                        data={filteredHyperlinks}
+                                        data={hyperlinks.data}
                                     />
                                 </div>
                                 <div

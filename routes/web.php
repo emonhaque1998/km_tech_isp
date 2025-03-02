@@ -32,10 +32,13 @@ Route::get('/dashboard', function () {
     $categories = Category::where(function ($query) use ($user) {
         $query->whereHas('hyperlink', function ($query) use ($user) {
             $query->where('user_id', $user->id);
-        })->orWhere('isLive', "1");
+            $query->orWhere("visibility", "global");
+        })->orWhere('isLive', "1")->where('visibility', 'single')->whereHas('user', function ($query) use ($user) {
+            $query->where('id', $user->id);
+        })->orWhere('visibility', 'global');
     })->with(['hyperlink' => function ($query) use ($user) {
         $query->where('user_id', $user->id);
-        $query->orWhere('visibility', 'global');
+        $query->orWhere("visibility", "global");
     }])->get(); // Added pagination
 
     if ($allHyperlinks) {

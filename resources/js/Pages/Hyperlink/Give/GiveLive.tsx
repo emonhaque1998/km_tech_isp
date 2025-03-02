@@ -2,19 +2,11 @@ import DailogBox from "@/Components/admin/DailogBox";
 import { DialogFooter } from "@/Components/ui/dialog";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/Components/ui/select";
 import { Head, useForm } from "@inertiajs/react";
 import { Category } from "../Category/columns";
 import { FormEventHandler } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import InputError from "@/Components/InputError";
 
 export default function GiveLive({
     user,
@@ -36,9 +28,8 @@ export default function GiveLive({
         slug: "",
         color: "",
         user_id: user.id,
-        category_id: "",
-        alternative: "",
-        isLive: "",
+        ifream: "",
+        isLive: "1",
     });
 
     const generateSlug = (name: string) => {
@@ -57,9 +48,11 @@ export default function GiveLive({
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("hyperlink.store"), {
-            onFinish: () =>
-                reset("name", "slug", "category_id", "alternative", "user_id"),
+        post(route("add-category.store"), {
+            onFinish: () => reset("name", "slug", "color", "ifream"),
+            onError: (error) => {
+                console.log(error);
+            },
             onSuccess: () =>
                 toast.success("Hyperlink added this user successfully"),
         });
@@ -73,6 +66,7 @@ export default function GiveLive({
                         <Input
                             id="name"
                             type="text"
+                            value={data.name}
                             placeholder="Enter Name"
                             onChange={handleNameChange}
                             className="col-span-12"
@@ -85,48 +79,41 @@ export default function GiveLive({
                             placeholder="Auto Generate Slug"
                             className="col-span-12"
                         />
-                        <Input
-                            id="alternative"
-                            type="text"
-                            value={data.alternative}
-                            placeholder="Alternative Name"
-                            className="col-span-12"
-                        />
-                        <div className="flex flex-row justify-between items-center gap-5">
+                        <InputError message={errors.slug} className="" />
+                        <input
+                            type="color"
+                            className="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700"
+                            id="hs-color-input"
+                            onChange={(e) => setData("color", e.target.value)}
+                            value={data.color}
+                            title="Choose your color"
+                        ></input>
+                        <InputError message={errors.color} className="" />
+
+                        {data.isLive == "1" && (
                             <div>
-                                <input
-                                    type="color"
-                                    className="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700"
-                                    id="hs-color-input"
-                                    onChange={(e) =>
-                                        setData("color", e.target.value)
-                                    }
-                                    value={data.color}
-                                    title="Choose your color"
-                                ></input>
-                            </div>
-                            <div className="">
-                                <input
-                                    id="isLive"
-                                    type="checkbox"
-                                    onChange={(e) => {
-                                        if (e.target.checked) {
-                                            setData("isLive", "1");
-                                        } else {
-                                            setData("isLive", "0");
-                                        }
-                                    }}
-                                    value=""
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                />
                                 <label
-                                    htmlFor="isLive"
-                                    className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    htmlFor="ifream"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 >
-                                    Is Live
+                                    Give you Ifream
                                 </label>
+                                <textarea
+                                    id="ifream"
+                                    rows={4}
+                                    cols={50}
+                                    onChange={(e) => {
+                                        setData("ifream", e.target.value);
+                                    }}
+                                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Write your thoughts here..."
+                                ></textarea>
+                                <InputError
+                                    message={errors.ifream}
+                                    className=""
+                                />
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
                 <DialogFooter>

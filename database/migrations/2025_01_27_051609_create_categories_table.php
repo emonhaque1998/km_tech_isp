@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string("color");
             $table->boolean("isLive")->default(false);
+            $table->enum('visibility', ['single', 'global'])->default('global');
             $table->text("ifream")->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -35,7 +35,14 @@ class AddCategoryController extends Controller
             'name' => ['required'],
             "slug" => ["required", "unique:categories,slug"],
             "color" => ['required'],
+            'user_id' => 'nullable|exists:users,id',
+            'isLive' => ['nullable'],
+            'ifream' => ['nullable'],
         ]);
+
+        if($request->user_id != null) {
+            $request->merge(["visibility" => "single"]);
+        } 
 
         Category::create($request->all());
 

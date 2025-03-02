@@ -3,11 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Category;
 use App\Models\Hyperlink;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -54,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Hyperlink::class);
     }
+
+    public function category()
+    {
+        return $this->hasMany(Category::class);
+    }   
 }

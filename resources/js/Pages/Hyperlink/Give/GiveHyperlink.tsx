@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { PageProps } from "@/types";
 import { columns, Payment } from "@/Pages/Users/columns";
 import { Category } from "./../Category/columns";
+import GiveLive from "./GiveLive";
 
 export default function GiveHyperlink({
     user,
@@ -58,7 +59,12 @@ export default function GiveHyperlink({
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="py-6 text-gray-900">Give Hyperlink</div>
+                        <div className="flex flex-row justify-between">
+                            <div className="text-gray-900 py-3 w-1/3">
+                                Hyperlinks
+                            </div>
+                            <GiveLive user={user} categories={categories} />
+                        </div>
                         <div className="px-6">
                             <form onSubmit={submit}>
                                 <div className="grid gap-6 mb-6 md:grid-cols-2">

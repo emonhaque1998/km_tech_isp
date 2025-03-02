@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Category;
+use App\Models\Hyperlink;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Hyperlink;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\User;
 
 class HyperlinkController extends Controller
 {
@@ -17,9 +18,11 @@ class HyperlinkController extends Controller
     public function index()
     {
         $hyperlinks = Hyperlink::with(['user', "category"])->paginate(10); // Paginate hyperlinks with 10 per page
-        
+        $categoris = Category::all();
+
         return Inertia::render("Hyperlink/Hyperlink", [
             "hyperlinks" => $hyperlinks,
+            "categories" => $categoris,
         ]);
     }
 

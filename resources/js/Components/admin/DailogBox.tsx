@@ -14,8 +14,10 @@ import { Label } from "@/Components/ui/label";
 export default function DialogDemo({
     btnName,
     children,
+    description,
 }: {
     btnName: string;
+    description?: string;
     children: React.ReactNode;
 }) {
     return (
@@ -27,7 +29,7 @@ export default function DialogDemo({
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Set Colume Number</DialogTitle>
+                    <DialogTitle>{description}</DialogTitle>
                     <DialogDescription>
                         Make changes to your profile here. Click save when
                         you're done.

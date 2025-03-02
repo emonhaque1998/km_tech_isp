@@ -4,6 +4,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { PageProps } from "@/types";
+import { Category } from "./columns";
 
 export default function AddCategory() {
     const {

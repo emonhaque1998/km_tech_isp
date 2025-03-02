@@ -6,10 +6,27 @@ import { Head, Link, usePage } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { Input } from "@/Components/ui/input";
 import { ToastContainer, toast } from "react-toastify";
+import DailogBox from "@/Components/admin/DailogBox";
+import { DialogFooter } from "@/Components/ui/dialog";
+import { FormEventHandler } from "react";
+import { Button } from "@/Components/ui/button";
+import { useForm } from "@inertiajs/react";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/Components/ui/select";
+import { Category } from "./Category/columns";
 
 export default function Categories({
     hyperlinks,
+    categories,
 }: PageProps<{
+    categories: Category[];
     hyperlinks: {
         data: Hyperlink[];
         links: any;
@@ -21,6 +38,27 @@ export default function Categories({
     const [filteredHyperlinks, setFilteredHyperlinks] = useState(
         hyperlinks.data
     );
+
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        errors,
+        reset,
+        recentlySuccessful,
+    } = useForm({ url: "", alternative: "", category_id: "" });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route("hyperlink.store"), {
+            onFinish: () => reset("url", "alternative", "category_id"),
+            onError: (error) => {
+                console.log(error);
+            },
+        });
+    };
 
     useEffect(() => {
         setFilteredHyperlinks(
@@ -59,12 +97,76 @@ export default function Categories({
                                         />
                                     </div>
                                 </div>
-                                <Link
-                                    href={route("add-category.index")}
-                                    className="bg-[#e67e22] text-white py-2 max-md:py-2 max-md:px-2 max-md:text-sm rounded-lg hover:bg-[#d35400] px-3"
+                                <DailogBox
+                                    btnName="Add Global Hyperlink"
+                                    description="Add Global Hyperlink"
                                 >
-                                    Add Global Hyperlink
-                                </Link>
+                                    <div className="grid gap-4 py-4">
+                                        <div className="grid grid-cols-4 items-center gap-4">
+                                            <Input
+                                                id="url"
+                                                type="url"
+                                                placeholder="Enter URL"
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "url",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="col-span-12"
+                                            />
+                                            <Input
+                                                id="alternative_name"
+                                                type="text"
+                                                placeholder="Alternative Name For Url"
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "alternative",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="col-span-12"
+                                            />
+                                            <div className="col-span-12">
+                                                <Select
+                                                    onValueChange={(value) =>
+                                                        setData(
+                                                            "category_id",
+                                                            value
+                                                        )
+                                                    }
+                                                >
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Select a Category" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            {categories.map(
+                                                                (category) => (
+                                                                    <SelectItem
+                                                                        key={
+                                                                            category.id
+                                                                        }
+                                                                        value={category.id.toString()} // Convert to string
+                                                                    >
+                                                                        {
+                                                                            category.name
+                                                                        }
+                                                                    </SelectItem>
+                                                                )
+                                                            )}
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <DialogFooter>
+                                        <Button type="submit" onClick={submit}>
+                                            Save changes
+                                        </Button>
+                                    </DialogFooter>
+                                </DailogBox>
                             </div>
                         </div>
                         <div className="container mx-auto">

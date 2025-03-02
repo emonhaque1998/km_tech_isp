@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 export type Hyperlink = {
     id: number;
     url: string;
-    user: { id: number; name: string; email: string };
+    user?: { id: number; name: string; email: string };
     category: { id: number; name: string; slug: string };
 };
 
@@ -19,12 +19,18 @@ export const columns: ColumnDef<Hyperlink>[] = [
     {
         accessorKey: "name",
         header: "Name",
-        cell: ({ row }) => <span>{row.original.user.name}</span>,
+        cell: ({ row }) => (
+            <span>{row.original.user ? row.original.user.name : "Global"}</span>
+        ),
     },
     {
         accessorKey: "email",
         header: "Email",
-        cell: ({ row }) => <span>{row.original.user.email}</span>,
+        cell: ({ row }) => (
+            <span>
+                {row.original.user ? row.original.user.email : "Global"}
+            </span>
+        ),
     },
     {
         accessorKey: "category",

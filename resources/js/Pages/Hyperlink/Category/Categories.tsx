@@ -80,7 +80,10 @@ export default function Categories({
                                         placeholder="Filter categories"
                                     />
                                 </div>
-                                <DailogBox btnName="Set Colume Number">
+                                <DailogBox
+                                    btnName="Set Colume Number"
+                                    description="Set Colume Hyperlink"
+                                >
                                     <div className="grid gap-4 py-4">
                                         <div className="grid grid-cols-4 items-center gap-4">
                                             <Input

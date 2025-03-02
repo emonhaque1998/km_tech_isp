@@ -48,15 +48,23 @@ export default function Categories({
                                 Hyperlinks
                             </div>
                             <div className="text-gray-900 py-3 flex flex-row gap-2 w-2/3 items-center justify-end">
-                                <div>
-                                    <Input
-                                        value={filter}
-                                        onChange={(e) =>
-                                            setFilter(e.target.value)
-                                        }
-                                        placeholder="Filter Hyperlinks"
-                                    />
+                                <div className="text-gray-900 py-3 flex flex-row gap-2 w-2/3 items-center justify-end">
+                                    <div>
+                                        <Input
+                                            value={filter}
+                                            onChange={(e) =>
+                                                setFilter(e.target.value)
+                                            }
+                                            placeholder="Filter Hyperlinks"
+                                        />
+                                    </div>
                                 </div>
+                                <Link
+                                    href={route("add-category.index")}
+                                    className="bg-[#e67e22] text-white py-2 max-md:py-2 max-md:px-2 max-md:text-sm rounded-lg hover:bg-[#d35400] px-3"
+                                >
+                                    Add Global Hyperlink
+                                </Link>
                             </div>
                         </div>
                         <div className="container mx-auto">

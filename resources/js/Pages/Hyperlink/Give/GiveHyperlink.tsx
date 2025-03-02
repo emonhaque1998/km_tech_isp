@@ -95,6 +95,7 @@ export default function GiveHyperlink({
                                             type="text"
                                             id="url"
                                             name="url"
+                                            value={data.url}
                                             onChange={(e) => {
                                                 setData("url", e.target.value);
                                             }}
@@ -118,6 +119,7 @@ export default function GiveHyperlink({
                                             type="text"
                                             id="alternative"
                                             name="alternative"
+                                            value={data.alternative}
                                             onChange={(e) => {
                                                 setData(
                                                     "alternative",

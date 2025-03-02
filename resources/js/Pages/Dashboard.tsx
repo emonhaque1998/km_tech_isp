@@ -84,7 +84,9 @@ export default function Dashboard({
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <div
-                                className={`grid grid-cols-${website.col_number} gap-5`}
+                                className={`grid grid-cols-${
+                                    website ? website.col_number : "4"
+                                } gap-5`}
                             >
                                 {categories.map((category) => {
                                     if (category.isLive == "1") {

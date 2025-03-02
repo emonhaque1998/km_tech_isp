@@ -11,7 +11,7 @@ class Hyperlink extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', "category_id", "user_id", "alternative"];
+    protected $fillable = ['url', "category_id", "user_id", "alternative", "visibility"];
 
     public function category()
     {

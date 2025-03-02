@@ -1,3 +1,4 @@
+import { useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { Category, columns } from "./columns";
 import { DataTable } from "@/Components/DataTable";
@@ -7,6 +8,9 @@ import { PageProps } from "@/types";
 import { Input } from "@/Components/ui/input";
 import { ToastContainer, toast } from "react-toastify";
 import DailogBox from "@/Components/admin/DailogBox";
+import { DialogFooter } from "@/Components/ui/dialog";
+import { FormEventHandler } from "react";
+import { Button } from "@/Components/ui/button";
 
 export default function Categories({
     categories,
@@ -30,6 +34,24 @@ export default function Categories({
             )
         );
     }, [filter, categories.data]);
+
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        errors,
+        reset,
+        recentlySuccessful,
+    } = useForm({ col_number: "" });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route("add-website-colume.store"), {
+            onFinish: () => reset("col_number"),
+        });
+    };
 
     return (
         <AuthenticatedLayout
@@ -58,7 +80,28 @@ export default function Categories({
                                         placeholder="Filter categories"
                                     />
                                 </div>
-                                <DailogBox btnName="Set Colume Number" />
+                                <DailogBox btnName="Set Colume Number">
+                                    <div className="grid gap-4 py-4">
+                                        <div className="grid grid-cols-4 items-center gap-4">
+                                            <Input
+                                                id="name"
+                                                type="number"
+                                                onChange={(e) =>
+                                                    setData(
+                                                        "col_number",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="col-span-12"
+                                            />
+                                        </div>
+                                    </div>
+                                    <DialogFooter>
+                                        <Button type="submit" onClick={submit}>
+                                            Save changes
+                                        </Button>
+                                    </DialogFooter>
+                                </DailogBox>
                                 <Link
                                     href={route("add-category.index")}
                                     className="bg-[#e67e22] text-white py-2 max-md:py-2 max-md:px-2 max-md:text-sm rounded-lg hover:bg-[#d35400] px-3"

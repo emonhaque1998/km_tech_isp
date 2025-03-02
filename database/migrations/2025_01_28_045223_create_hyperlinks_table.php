@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('url');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->string("alternative");
+            $table->enum('visibility', ['single', 'global'])->default('global');
             $table->timestamps();
         });
     }

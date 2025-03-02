@@ -1,4 +1,3 @@
-import { useForm } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
 import {
     Dialog,
@@ -11,27 +10,14 @@ import {
 } from "@/Components/ui/dialog";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import { FormEventHandler } from "react";
 
-export default function DialogDemo({ btnName }: { btnName: string }) {
-    const {
-        data,
-        setData,
-        post,
-        processing,
-        errors,
-        reset,
-        recentlySuccessful,
-    } = useForm({ col_number: "" });
-
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        post(route("add-website-colume.store"), {
-            onFinish: () => reset("col_number"),
-        });
-    };
-
+export default function DialogDemo({
+    btnName,
+    children,
+}: {
+    btnName: string;
+    children: React.ReactNode;
+}) {
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -47,23 +33,7 @@ export default function DialogDemo({ btnName }: { btnName: string }) {
                         you're done.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Input
-                            id="name"
-                            type="number"
-                            onChange={(e) =>
-                                setData("col_number", e.target.value)
-                            }
-                            className="col-span-12"
-                        />
-                    </div>
-                </div>
-                <DialogFooter>
-                    <Button type="submit" onClick={submit}>
-                        Save changes
-                    </Button>
-                </DialogFooter>
+                {children}
             </DialogContent>
         </Dialog>
     );

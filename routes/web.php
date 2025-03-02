@@ -24,9 +24,14 @@ Route::get("/", function () {
 Route::get('/dashboard', function () {
     $user = Auth::user();
     $allHyperlinks = $user->hyperlink;
-    $hyperlinks = Hyperlink::where("user_id", $user->id)->with("category")->paginate(10);
+    $hyperlinks = Hyperlink::where('visibility', 'global')->orWhere("user_id", $user->id)->with("category")->paginate(10);
     $hyperlinkCount = Hyperlink::where("user_id", $user->id)->count();
-    
+
+    $posts = Hyperlink::where('visibility', 'global')
+            ->orWhere('user_id', Auth::user()->id) // If you want to filter by the current user
+            ->get();
+
+ 
     $categories = Category::where(function ($query) use ($user) {
         $query->whereHas('hyperlink', function ($query) use ($user) {
             $query->where('user_id', $user->id);
@@ -59,6 +64,7 @@ Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function
     Route::resource("/add-user", AddUserController::class)->only(["index", "store"]);
     Route::get("user/{id}/add-hyperlink", [AddHyperlinkController::class, "index"])->name("add-hyperlink.index");
     Route::post("/website", [ViewWebsiteController::class, "setColumeMax"])->name("add-website-colume.store");
+    
 });
 
 Route::middleware('auth')->group(function () {

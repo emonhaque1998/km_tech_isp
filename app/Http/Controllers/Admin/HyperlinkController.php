@@ -37,11 +37,18 @@ class HyperlinkController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "user_id" => "required",
+            'user_id' => 'nullable|exists:users,id',
+            "alternative" => "required",
             "url" => ["required", "url"],
             "category_id" => "required",
         ]);
 
+        if($request->user_id != null) {
+            $request->merge([
+                "visibility" => "single"
+            ]);
+        }
+        
         Hyperlink::create($request->all());
 
         return Redirect::back();

@@ -231,17 +231,19 @@ export default function Dashboard({
                                     <div>{`Hyperlinks ${hyperlinks.data.length} of ${hyperlinksCount}`}</div>
                                     <div className="w-52">
                                         <Input
-                                            value={data.search}
+                                            value={filter}
                                             type="text"
                                             placeholder="Filter Hyperlinks"
-                                            onChange={submit}
+                                            onChange={(e) =>
+                                                setFilter(e.target.value)
+                                            }
                                         />
                                     </div>
                                 </div>
                                 <div className="container mx-auto">
                                     <DataTable
                                         columns={columns}
-                                        data={hyperlinks.data}
+                                        data={filteredHyperlinks}
                                     />
                                 </div>
                                 <div

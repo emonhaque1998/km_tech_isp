@@ -37,7 +37,7 @@ Route::get('/dashboard', function () {
             $query->orWhere("visibility", "global");
         })->orWhere('isLive', "1")->where('visibility', 'single')->whereHas('user', function ($query) use ($user) {
             $query->where('id', $user->id);
-        })->orWhere('visibility', 'global');
+        });
     })->with(['hyperlink' => function ($query) use ($user) {
         $query->where('user_id', $user->id);
         $query->orWhere("visibility", "global");

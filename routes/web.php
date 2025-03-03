@@ -35,13 +35,27 @@ Route::get('/dashboard', function () {
         $query->whereHas('hyperlink', function ($query) use ($user) {
             $query->where('user_id', $user->id);
             $query->orWhere("visibility", "global");
-        })->orWhere('isLive', "1")->where('visibility', 'single')->whereHas('user', function ($query) use ($user) {
+        })
+        ->orWhere('isLive', "1") // Include categories with isLive = "1"
+        ->where('visibility', 'single')
+        ->whereHas('user', function ($query) use ($user) {
             $query->where('id', $user->id);
-        });
-    })->with(['hyperlink' => function ($query) use ($user) {
+        })
+        ->orWhere('visibility', 'global');
+    })
+    ->where(function ($query) use ($user) {
+        $query->whereHas('hyperlink', function ($query) use ($user) {
+            $query->where('user_id', $user->id)
+                  ->orWhere("visibility", "global");
+        })
+        ->orWhere('isLive', "1"); // Ensure categories with isLive = "1" are included
+    })
+    ->with(['hyperlink' => function ($query) use ($user) {
         $query->where('user_id', $user->id);
         $query->orWhere("visibility", "global");
-    }])->get(); // Added pagination
+    }])
+    ->get();
+ 
 
     if ($allHyperlinks) {
         $allHyperlinks = $allHyperlinks->load(['category']);

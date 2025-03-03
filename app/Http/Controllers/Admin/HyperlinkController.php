@@ -18,7 +18,7 @@ class HyperlinkController extends Controller
     public function index()
     {
         $hyperlinks = Hyperlink::with(['user', "category"])->paginate(10); // Paginate hyperlinks with 10 per page
-        $categoris = Category::all();
+        $categoris = Category::where("isLive", "0")->get();
 
         return Inertia::render("Hyperlink/Hyperlink", [
             "hyperlinks" => $hyperlinks,
@@ -86,6 +86,8 @@ class HyperlinkController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Category::destroy($id);
+
+        return Redirect::route("hyperlink.index");
     }
 }

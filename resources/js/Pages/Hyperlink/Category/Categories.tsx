@@ -81,7 +81,7 @@ export default function Categories({
                                     />
                                 </div>
                                 <DailogBox
-                                    btnName="Set Colume Number"
+                                    btnName="Set Colume"
                                     description="Set Colume Hyperlink"
                                 >
                                     <div className="grid gap-4 py-4">

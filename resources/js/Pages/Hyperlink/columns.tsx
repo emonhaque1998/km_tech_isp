@@ -47,7 +47,7 @@ export const columns: ColumnDef<Hyperlink>[] = [
         cell: ({ row }) => (
             <div className="flex gap-4">
                 <Link
-                    href={route("add-category.destroy", row.original.id)}
+                    href={route("hyperlink.destroy", row.original.id)}
                     method="delete"
                     onSuccess={() =>
                         toast.success("Category deleted successfully")

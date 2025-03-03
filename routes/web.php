@@ -74,7 +74,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware("auth", "verified", CheckRole::class.":admin")->group(function () {
-    Route::resource("/hyperlink", HyperlinkController::class)->only(["index", "store"]);
+    Route::resource("/hyperlink", HyperlinkController::class)->only(["index", "store", "destroy"]);
     Route::resource("/users", UserController::class)->only(["index", "show", "destroy"]);
     Route::resource("/categories", CategoryController::class)->only(["index", "show", "update"]);
     Route::resource("/add-category", AddCategoryController::class)->only(["index", "store", "destroy"]);
